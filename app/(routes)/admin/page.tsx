@@ -28,7 +28,7 @@ function AdminPage() {
             <CardDescription>Kullanıcıları ve organizatörleri yönetin</CardDescription>
           </CardHeader>
           <CardContent className="text-sm text-gray-500">
-            Kullanıcı hesaplarını görüntüleyin, düzenleyin ve yönetin. Rol atamaları yapın ve organizatör başvurularını onaylayın.
+            Kullanıcı hesaplarını görüntüleyin, düzenleyin ve yönetin. Rol atamaları yapın ve organizatör başvurularını onaylayın
           </CardContent>
           <CardFooter className="flex flex-col items-start gap-2">
             <Button
