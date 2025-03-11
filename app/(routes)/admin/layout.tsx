@@ -11,7 +11,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
-  // Sadece istemci tarafında çalıştığından emin ol
+  // Sadece istemci tarafında çalıştığından emin olsdsadsa
   useEffect(() => {
     setIsClient(true);
   }, []);
