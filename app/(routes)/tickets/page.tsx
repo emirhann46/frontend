@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, Download, Share2 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import useAuthStore from "@/app/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 interface Ticket {
   id: string;
@@ -24,6 +26,26 @@ interface Ticket {
 }
 
 export default function TicketsPage() {
+  const router = useRouter();
+  const { user, isAuthenticated } = useAuthStore();
+  const [isClient, setIsClient] = useState(false);
+
+  // Client tarafında çalıştığından emin ol
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Kullanıcı giriş yapmamışsa login sayfasına yönlendir
+  useEffect(() => {
+    if (isClient && !isAuthenticated) {
+      toast.error("Biletlerinizi görüntülemek için giriş yapmalısınız.");
+      router.push("/auth/login");
+    }
+  }, [isClient, isAuthenticated, router]);
+
+  // Kullanıcı rolünü al
+  const userRole = user?.rol;
+
   // Gerçek uygulamada bu veri API'den gelecektir
   const [tickets, setTickets] = useState<Ticket[]>([
     {
@@ -71,8 +93,6 @@ export default function TicketsPage() {
   ]);
 
   const [activeFilter, setActiveFilter] = useState<"all" | "active" | "used" | "expired">("all");
-  const { user } = useAuthStore();
-  const userRole = user?.rol;
 
   const filteredTickets = tickets.filter(ticket => {
     if (activeFilter === "all") return true;
@@ -119,8 +139,12 @@ export default function TicketsPage() {
     <div className="bg-background min-h-screen py-12">
       {
         userRole === "admin" ? (
-          <div>
-            <h1>Admin Paneli</h1>
+          <div className="container mx-auto px-4">
+            <h1 className="text-3xl font-bold mb-8 text-foreground">Admin Paneli</h1>
+            <p className="mb-4">Admin olarak tüm biletleri yönetebilirsiniz.</p>
+            <Button onClick={() => router.push('/admin')}>
+              Admin Paneline Git
+            </Button>
           </div>
         ) : (
           <div className="container mx-auto px-4">
