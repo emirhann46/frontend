@@ -25,7 +25,7 @@ export default function LoginPage() {
     password: z.string().min(6, "Şifre en az 6 karakter olmalıdır"),
   });
 
-  // Kullanıcı zaten giriş yapmışsa ana sayfaya yönlendir
+  // Kullanıcı zaten giriş yapmışsa ana sayfaya yönlendirrrr
   useEffect(() => {
     if (isAuthenticated) {
       router.push("/");
