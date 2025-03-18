@@ -264,7 +264,7 @@ export default function TicketsPage() {
                               </div>
                             </div>
                           ) :
-                            <div className="mt-6 md:mt-0 flex flex-col items-center justify-center">
+                            <div className="mt-6  md:mt-0 flex flex-col items-center justify-center">
                               <p className="text-muted-foreground mb-6">Bilet kullanıldı</p>
                             </div>
                           }
