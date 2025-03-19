@@ -65,7 +65,7 @@ export function Navbar() {
       await refreshUserData();
       toast.success("Kullanıcı bilgileri güncellendi.", { id: "refreshUser" });
 
-      // Kullanıcı admin değilse ve admin sayfasındaysa ana sayfaya yönlendir
+      // Kullanıcı admin değilse ve admin sayfasındaysa ana sayfaya yönlendirrrr
       console.log("Navbar - Kullanıcı rolüymüş:", userRole);
       if (userRole !== "admin" && pathname.startsWith("/admin")) {
         toast.error("Admin yetkileriniz değiştirildi. Ana sayfaya yönlendiriliyorsunuz.");
@@ -130,7 +130,7 @@ export function Navbar() {
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="flex-shrink-0 flex items-center">
-                <span className="text-2xl font-bold text-primary">BiletApp</span>
+                <span className="text-2xl font-bold text-primary">Bilet App</span>
               </div>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
