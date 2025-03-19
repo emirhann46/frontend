@@ -65,7 +65,7 @@ export function Navbar() {
       await refreshUserData();
       toast.success("Kullanıcı bilgileri güncellendi.", { id: "refreshUser" });
 
-      // Kullanıcı admin değilse ve admin sayfasındaysa ana sayfaya yönlendir
+      // Kullanıcı admin değilse ve admin sayfasındaysa ana sayfaya yönlendirrrr
       console.log("Navbar - Kullanıcı rolüymüş:", userRole);
       if (userRole !== "admin" && pathname.startsWith("/admin")) {
         toast.error("Admin yetkileriniz değiştirildi. Ana sayfaya yönlendiriliyorsunuz.");
