@@ -130,7 +130,7 @@ export function Navbar() {
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="flex-shrink-0 flex items-center">
-                <span className="text-2xl font-bold text-primary">BiletApp</span>
+                <span className="text-2xl font-bold text-primary">Bilet App</span>
               </div>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
