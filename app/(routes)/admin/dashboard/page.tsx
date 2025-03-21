@@ -7,12 +7,13 @@ import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { format } from 'date-fns'
 import { tr } from 'date-fns/locale'
-import { CalendarIcon, Plus, Trash2, ImagePlus } from 'lucide-react'
+import { CalendarIcon, Plus, Trash2, ImagePlus, Clock } from 'lucide-react'
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 const AdminDashboard = () => {
   const [date, setDate] = useState<Date>()
+  const [time, setTime] = useState<string>('')
   const [imageLinks, setImageLinks] = useState<string[]>([''])
 
   const addImageLink = () => {
@@ -28,6 +29,29 @@ const AdminDashboard = () => {
     const newLinks = [...imageLinks]
     newLinks[index] = value
     setImageLinks(newLinks)
+  }
+
+  const handleDateSelect = (selectedDate: Date | undefined) => {
+    if (selectedDate) {
+      const currentDate = date || new Date()
+      selectedDate.setHours(currentDate.getHours())
+      selectedDate.setMinutes(currentDate.getMinutes())
+      setDate(selectedDate)
+    } else {
+      setDate(undefined)
+    }
+  }
+
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTime = e.target.value
+    setTime(newTime)
+
+    if (date) {
+      const [hours, minutes] = newTime.split(':')
+      const newDate = new Date(date)
+      newDate.setHours(parseInt(hours), parseInt(minutes))
+      setDate(newDate)
+    }
   }
 
   return (
@@ -52,28 +76,43 @@ const AdminDashboard = () => {
             />
           </div>
 
-          {/* Tarih */}
+          {/* Tarih ve Saat */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Etkinlik Tarihi</label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start text-left font-normal"
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, 'PPP', { locale: tr }) : "Tarih seçiniz"}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  locale={tr}
+            <label className="text-sm font-medium">Etkinlik Tarihi ve Saati</label>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div className="sm:col-span-2">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start text-left font-normal"
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date ? format(date, 'PPP', { locale: tr }) : "Tarih seçiniz"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={handleDateSelect}
+                      locale={tr}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="relative">
+                <Input
+                  type="time"
+                  value={time}
+                  onChange={handleTimeChange}
+                  className="w-full"
+                  step="300"
                 />
-              </PopoverContent>
-            </Popover>
+                <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+              </div>
+            </div>
           </div>
 
           {/* Lokasyon */}
