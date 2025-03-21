@@ -25,7 +25,6 @@ export function Navbar() {
   }, []);
 
   // Kullanıcı rolünü doğru şekilde al
-  console.log("Navbar - Kullanıcı:", user);
   const userRole = user?.rol;
 
   // Sayfa değiştiğinde kullanıcı bilgilerini güncelle
@@ -35,14 +34,6 @@ export function Navbar() {
     }
   }, [pathname, isClient, isAuthenticated, refreshUserData]);
 
-  // Debug için
-  useEffect(() => {
-    if (isClient) {
-      console.log("Navbar - Kullanıcı:", user);
-      console.log("Navbar - Kullanıcı rolü:", userRole);
-      console.log("Navbar - Kimlik doğrulama durumu:", isAuthenticated);
-    }
-  }, [user, userRole, isAuthenticated, isClient]);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -66,7 +57,6 @@ export function Navbar() {
       toast.success("Kullanıcı bilgileri güncellendi.", { id: "refreshUser" });
 
       // Kullanıcı admin değilse ve admin sayfasındaysa ana sayfaya yönlendirrrr
-      console.log("Navbar - Kullanıcı rolüymüş:", userRole);
       if (userRole !== "admin" && pathname.startsWith("/admin")) {
         toast.error("Admin yetkileriniz değiştirildi. Ana sayfaya yönlendiriliyorsunuz.");
         router.push("/");
