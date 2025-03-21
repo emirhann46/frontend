@@ -11,35 +11,42 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { user, isAuthenticated } = useAuthStore();
+  const { user, isAuthenticated, isLoading: authLoading, refreshUserData } = useAuthStore();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Client tarafında çalıştığından emin ol
-    if (typeof window !== "undefined") {
-      // Kullanıcı giriş yapmamışsa login sayfasına yönlendir
-      if (!isAuthenticated) {
-        toast.error("Bu sayfaya erişmek için giriş yapmalısınız.");
+    const checkAuth = async () => {
+      try {
+        // Kullanıcı bilgilerini yenile
+        await refreshUserData();
+
+        if (!isAuthenticated) {
+          toast.error("Bu sayfaya erişmek için giriş yapmalısınız.");
+          router.push("/auth/login");
+          return;
+        }
+
+        if (user?.rol !== "admin") {
+          toast.error("Bu sayfaya erişim yetkiniz bulunmamaktadır.");
+          router.push("/");
+          return;
+        }
+
+        setIsAuthorized(true);
+      } catch (error) {
+        console.error("Yetkilendirme hatası:", error);
+        toast.error("Yetkilendirme hatası oluştu.");
         router.push("/auth/login");
-        return;
+      } finally {
+        setIsLoading(false);
       }
+    };
 
-      // Kullanıcı admin değilse ana sayfaya yönlendir
-      if (user?.rol !== "admin") {
-        toast.error("Bu sayfaya erişim yetkiniz bulunmamaktadır.");
-        router.push("/");
-        return;
-      }
+    checkAuth();
+  }, [isAuthenticated, user, router, refreshUserData]);
 
-      // Kullanıcı admin ise erişime izin ver
-      setIsAuthorized(true);
-      setIsLoading(false);
-    }
-  }, [isAuthenticated, user, router]);
-
-  // Yükleme durumunda basit bir yükleniyor göstergesi
-  if (isLoading) {
+  if (isLoading || authLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -50,12 +57,10 @@ export default function AdminLayout({
     );
   }
 
-  // Yetkisiz erişim durumunda hiçbir şey gösterme (zaten yönlendirme yapılacak)
   if (!isAuthorized) {
     return null;
   }
 
-  // Yetkili kullanıcı için içeriği göster
   return (
     <div className="admin-layout">
       {children}
