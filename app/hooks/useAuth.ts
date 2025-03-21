@@ -16,7 +16,8 @@ interface AuthState {
   logout: () => void;
   error: string | null;
   getJwt: () => string | null;
-  refreshUserData: () => Promise<void>;
+  refreshUserData: () => Promise<User | null>;
+  checkAdminRole: () => boolean;
 }
 
 const useAuthStore = create<AuthState>()(
@@ -41,11 +42,12 @@ const useAuthStore = create<AuthState>()(
 
       setUser: (userData: any) => {
         if (!userData) {
-          set({ user: null });
+          set({ user: null, isAuthenticated: false });
           return;
         }
 
-        console.log("Gelen kullanıcı verisi:", userData);
+        // Rol bilgisini doğrudan ekrana yazdırır (debug için)
+        console.log("Kullanıcı rolü:", userData.rol);
 
         set({ user: userData, isAuthenticated: true });
       },
@@ -81,15 +83,23 @@ const useAuthStore = create<AuthState>()(
         return null;
       },
 
+      // Admin rolünü kontrol eden yardımcı fonksiyon
+      checkAdminRole: () => {
+        const { user } = get();
+        return user?.rol === "admin";
+      },
+
       // Kullanıcı bilgilerini sunucudan yeniden yükle
       refreshUserData: async () => {
         try {
+          set({ isLoading: true });
           const { getJwt, setUser } = get();
           const token = getJwt();
 
           if (!token) {
             console.error("Yetkilendirme token'ı bulunamadı");
-            return;
+            set({ isLoading: false });
+            return null;
           }
 
           // Kullanıcı bilgilerini API'den al
@@ -100,11 +110,17 @@ const useAuthStore = create<AuthState>()(
           });
 
           if (response.data) {
-            console.log("Kullanıcı bilgileri güncellendi:", response.data);
             setUser(response.data);
+            set({ isLoading: false });
+            return response.data;
           }
+
+          set({ isLoading: false });
+          return null;
         } catch (error) {
           console.error("Kullanıcı bilgileri güncellenirken hata oluştu:", error);
+          set({ isLoading: false });
+          return null;
         }
       }
     }),

@@ -11,42 +11,70 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { user, isAuthenticated, isLoading: authLoading, refreshUserData } = useAuthStore();
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const { refreshUserData, getJwt, checkAdminRole, user } = useAuthStore();
+  const [loading, setLoading] = useState(true);
+  const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        // Kullanıcı bilgilerini yenile
-        await refreshUserData();
+    let isMounted = true;
 
-        if (!isAuthenticated) {
-          toast.error("Bu sayfaya erişmek için giriş yapmalısınız.");
+    const verifyAdmin = async () => {
+      try {
+        setLoading(true);
+
+        // Token kontrolü
+        const token = getJwt();
+        if (!token) {
+          if (isMounted) {
+            toast.error("Bu sayfaya erişmek için giriş yapmalısınız.");
+            router.push("/auth/login");
+          }
+          return;
+        }
+
+        // Kullanıcı bilgilerini yenile
+        const userData = await refreshUserData();
+
+        // Component unmount olduysa işlemi durdur
+        if (!isMounted) return;
+
+        if (!userData) {
+          toast.error("Kullanıcı bilgileri alınamadı.");
           router.push("/auth/login");
           return;
         }
 
-        if (user?.rol !== "admin") {
+        // Admin rolünü kontrol et
+        if (userData.rol !== "admin") {
           toast.error("Bu sayfaya erişim yetkiniz bulunmamaktadır.");
           router.push("/");
           return;
         }
 
-        setIsAuthorized(true);
+        // Yetkilendirme başarılı
+        setAuthorized(true);
       } catch (error) {
-        console.error("Yetkilendirme hatası:", error);
-        toast.error("Yetkilendirme hatası oluştu.");
-        router.push("/auth/login");
+        if (isMounted) {
+          console.error("Yetkilendirme kontrolü sırasında hata:", error);
+          toast.error("Yetkilendirme hatası oluştu.");
+          router.push("/auth/login");
+        }
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
-    checkAuth();
-  }, [isAuthenticated, user, router, refreshUserData]);
+    verifyAdmin();
 
-  if (isLoading || authLoading) {
+    // Cleanup function
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -57,7 +85,7 @@ export default function AdminLayout({
     );
   }
 
-  if (!isAuthorized) {
+  if (!authorized) {
     return null;
   }
 
