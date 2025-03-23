@@ -42,7 +42,7 @@ export function Navbar() {
   const handleLogout = () => {
     logout();
     // Çıkış yapıldıktan sonra ana sayfaya yönlendir
-    window.location.href = "/";
+    router.push("/");
   };
 
   // Kullanıcı bilgilerini manuel olarak yenile
@@ -111,7 +111,6 @@ export function Navbar() {
     }
   }
 
-  // Sayfa sunucu tarafında render ediliyorsa veya kullanıcı bilgileri henüz yüklenmemişse
   // sadece temel içeriği göster
   if (!isClient) {
     return (
@@ -134,7 +133,7 @@ export function Navbar() {
 
   return (
     <nav className="bg-background border-b border-border">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto pb-3 overflow-x-auto scrollbar-wrapper px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
@@ -147,7 +146,7 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`inline-flex justify-center items-center px-3 pt-1 border-b-2 text-sm font-medium cursor-pointer ${pathname === link.href
+                  className={`inline-flex justify-center items-center px-3 lg:mr-1 pt-1 border-b-2 text-sm font-medium cursor-pointer ${pathname === link.href
                     ? "border-primary text-primary"
                     : "border-transparent text-foreground hover:border-border hover:text-primary"
                     }`}
@@ -213,7 +212,7 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu - Using the MobileMenu component */}
+      {/* Mobile menu ekran daralınca burası çalışcak */}
       <MobileMenu
         isOpen={mobileMenuOpen}
         navLinks={navLinks}
