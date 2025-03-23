@@ -13,7 +13,7 @@ export const updateProfile = async (data: ProfileUpdateData) => {
     const { jwt } = useAuthStore.getState();
 
     const response = await axios.put(
-      "http://localhost:1337/api/users/me",
+      "http://localhost:1337/api/users/me?populate=*",
       data,
       {
         headers: {
