@@ -124,7 +124,7 @@ export function Navbar() {
               </div>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
-              <div className="h-5 w-5" /> {/* Tema değiştirici isdsadasçin yer tutucu */}
+              <div className="h-5 w-5" /> {/* Tema değiştirici yer tutucu */}
             </div>
           </div>
         </div>
