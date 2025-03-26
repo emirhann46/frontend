@@ -130,6 +130,7 @@ export function Navbar() {
       </nav>
     );
   }
+  {/*  */}
 
   return (
     <nav className="bg-background border-b border-border">
