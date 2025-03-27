@@ -5,6 +5,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Home } from "lucide-react";
 
 export default function NotFound() {
+  const handleGoBack = () => {
+    if (typeof window !== "undefined") {
+      window.history.back();
+    }
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
       <div className="text-center max-w-md mx-auto p-6">
@@ -20,14 +26,12 @@ export default function NotFound() {
               Ana Sayfa
             </Link>
           </Button>
-          <Button asChild>
-            <Link href="javascript:history.back()" className="flex items-center gap-2">
-              <ArrowLeft size={16} />
-              Geri Dön
-            </Link>
+          <Button onClick={handleGoBack} className="flex items-center gap-2">
+            <ArrowLeft size={16} />
+            Geri Dön
           </Button>
         </div>
       </div>
     </div>
   );
-} 
+}
