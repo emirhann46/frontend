@@ -78,7 +78,7 @@ export default function ProfilePage() {
 
           {!isEditing ? (
             <Button type="button" onClick={() => setIsEditing(true)}>
-              Düzenle
+              Düzenleee
             </Button>
           ) : (
             <div className="flex gap-2">

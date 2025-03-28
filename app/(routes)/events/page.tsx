@@ -1,5 +1,9 @@
 import { EventList } from "@/app/components/events/event-list";
 import { EventFilters } from "@/app/components/events/event-filters";
+import CategoryFilter from '../components/CategoryFilter'; // Kendi yoluna göre ayarla
+
+import { Metadata } from "next";
+import { getEvents } from "@/app/actions/getEvents";
 
 export default function EventsPage() {
   return (
