@@ -11,7 +11,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { refreshUserData, getJwt, checkAdminRole, user } = useAuthStore();
+  const { refreshUserData, getJwt} = useAuthStore();
   const [loading, setLoading] = useState(true);
   const [authorized, setAuthorized] = useState(false);
 
