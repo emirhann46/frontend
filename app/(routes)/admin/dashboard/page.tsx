@@ -63,23 +63,6 @@ const AdminDashboard = () => {
     }));
   }
 
-  const handleDateSelect = (selectedDate: Date | undefined) => {
-    if (selectedDate) {
-      const currentDate = formData.date || new Date();
-      selectedDate.setHours(currentDate.getHours());
-      selectedDate.setMinutes(currentDate.getMinutes());
-      setFormData(prev => ({
-        ...prev,
-        date: selectedDate
-      }));
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        date: undefined
-      }));
-    }
-  }
-
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTime = e.target.value;
     setTime(newTime);

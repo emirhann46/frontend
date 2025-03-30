@@ -1,8 +1,19 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { getOrganizers } from '@/app/actions/userRoleList'
+
+// Organizatör için tip tanımı
+interface Organizer {
+  id: string;
+  username: string;
+  email: string;
+  // Gerekliyse diğer alanları da ekleyin
+}
+
 function OrganizerPage() {
-  const [organizers, setOrganizers] = useState<any[]>([]);
+  // any yerine Organizer tipini kullanıyoruz
+  const [organizers, setOrganizers] = useState<Organizer[]>([]);
+
   useEffect(() => {
     const fetchOrganizers = async () => {
       try {
@@ -14,18 +25,19 @@ function OrganizerPage() {
     };
     fetchOrganizers();
   }, []);
+
   return (
     <div>
       <h1>Organizer Page</h1>
 
       <div className="flex flex-col gap-4">
-      
-      {organizers.map((organizer) => (
-        <div key={organizer.id}>
-          <h2>{organizer.username}</h2>
-          <p>{organizer.email}</p>
-        </div>
-      ))}
+
+        {organizers.map((organizer) => (
+          <div key={organizer.id}>
+            <h2>{organizer.username}</h2>
+            <p>{organizer.email}</p>
+          </div>
+        ))}
 
       </div>
 
