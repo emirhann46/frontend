@@ -11,7 +11,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
-import { startSession } from "@/lib/session";
 import useAuthStore from "@/app/hooks/useAuth";
 
 export default function LoginPage() {

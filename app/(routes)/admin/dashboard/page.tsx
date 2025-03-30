@@ -3,11 +3,8 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Calendar } from '@/components/ui/calendar'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { format } from 'date-fns'
-import { tr } from 'date-fns/locale'
-import { CalendarIcon, Plus, Trash2, ImagePlus, Clock } from 'lucide-react'
+import { Popover, PopoverTrigger } from '@/components/ui/popover'
+import { CalendarIcon, Plus, Trash2, Clock } from 'lucide-react'
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -149,17 +146,10 @@ const AdminDashboard = () => {
                         className="w-full justify-start text-left font-normal"
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {formData.date ? format(formData.date, 'PPP', { locale: tr }) : "Tarih seçiniz"}
+                      
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={formData.date}
-                        onSelect={handleDateSelect}
-                        locale={tr}
-                      />
-                    </PopoverContent>
+                   
                   </Popover>
                 </div>
 
