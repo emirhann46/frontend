@@ -77,7 +77,7 @@ export default function LoginPage() {
         <p className="mt-2 text-center text-sm text-muted-foreground">
           Veya {" "}
           <Link href="/auth/register" className="font-medium text-primary hover:text-primary/70">
-            yeni bir hesap oluşturun
+            Yeni bir hesap oluşturun
           </Link>
         </p>
       </div>
