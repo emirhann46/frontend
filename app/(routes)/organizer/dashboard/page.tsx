@@ -34,7 +34,7 @@ interface Event {
 
 export default function OrganizerDashboard() {
   // Gerçek uygulamada bu veri API'den gelecektir
-  const [events, setEvents] = useState<Event[]>([
+  const [events, _setEvents] = useState<Event[]>([
     {
       id: "1",
       title: "Duman Konseri",
@@ -49,7 +49,7 @@ export default function OrganizerDashboard() {
     },
     {
       id: "2",
-      title: "MFÖ Konseri",
+      title: "Konser iste",
       date: "22 Aralık 2023",
       time: "21:00",
       location: "Zorlu PSM, İstanbul",
