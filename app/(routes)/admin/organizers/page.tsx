@@ -28,7 +28,7 @@ function OrganizerPage() {
 
   return (
     <div>
-      <h1>Organizer Page</h1>
+      <h1>Organizer Sayfası</h1>
 
       <div className="flex flex-col gap-4">
 
