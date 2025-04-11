@@ -31,7 +31,6 @@
     "next": "15.2.0",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
-    "react-day-picker": "^8.10.1",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "react-hot-toast": "^2.5.2",
@@ -44,7 +43,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^20.17.30",
     "@types/qrcode.react": "^3.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
