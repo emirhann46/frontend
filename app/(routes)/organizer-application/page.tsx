@@ -16,31 +16,34 @@ export default function OrganizerApplicationPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Kullanıcı giriş yapmamışsa login sayfasına yönlendir
-  useEffect(() => {
-    if (!isAuthenticated) {
-      toast.error("Bu sayfaya erişmek için giriş yapmalısınız.");
-      router.push("/auth/login");
-    }
-  }, [isAuthenticated, router]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (!isAuthenticated) {
+  //       toast.error("Bu sayfaya erişmek için giriş yapmalısınız.");
+  //       router.push("/auth/login");
+  //     }
+  //   }, 3000);
 
-  // Zaten organizatör ise ana sayfaya yönlendir
-  useEffect(() => {
-    if (user?.rol === "organizer") {
-      toast.error("Zaten organizatör rolüne sahipsiniz.");
-      router.push("/");
-    }
-  }, [user, router]);
+  // }, [isAuthenticated, router]);
+
+  // // Zaten organizatör ise ana sayfaya yönlendir
+  // useEffect(() => {
+  //   if (user?.rol === "organizer") {
+  //     toast.error("Zaten organizatör rolüne sahipsiniz.");
+  //     router.push("/");
+  //   }  
+  // }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!title || !description) {
       toast.error("Lütfen tüm alanları doldurun.");
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       toast.success("Başvurunuz başarıyla gönderildi. İncelendikten sonra size bilgi verilecektir.");
       router.push("/");
@@ -57,7 +60,7 @@ export default function OrganizerApplicationPage() {
       <p className="mb-6 text-muted-foreground">
         Organizatör olmak için lütfen aşağıdaki formu doldurun. Başvurunuz incelendikten sonra size bilgi verilecektir.
       </p>
-      
+
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label className="block text-sm font-medium mb-2">Başvuru Başlığı</label>
@@ -68,7 +71,7 @@ export default function OrganizerApplicationPage() {
             required
           />
         </div>
-        
+
         <div>
           <label className="block text-sm font-medium mb-2">Başvuru Açıklaması</label>
           <Textarea
@@ -79,7 +82,7 @@ export default function OrganizerApplicationPage() {
             required
           />
         </div>
-        
+
         <Button type="submit" disabled={isSubmitting} className="w-full">
           {isSubmitting ? "Gönderiliyor..." : "Başvuruyu Gönder"}
         </Button>

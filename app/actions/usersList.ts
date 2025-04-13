@@ -17,7 +17,7 @@ export async function getUsersList() {
     }
 
     // Kullanıcı listesini al
-    const response = await axios.get("http://localhost:1337/api/users", {
+    const response = await axios.get("http://localhost:1337/api/users/", {
       headers: {
         Authorization: `Bearer ${token}`
       }
